@@ -21,5 +21,6 @@ public interface ContatoRepository extends JpaRepository<ContatoEntity,Long> {
     @Query("select c from ContatoEntity c where c.nome like concat( '%', :nome, '%')")
     List<ContatoEntity> buscarNomeLike(String nome);
 
+
     
 }
