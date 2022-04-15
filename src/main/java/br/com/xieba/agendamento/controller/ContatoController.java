@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "contato")
 @Api(tags = {"ManterContatos"})
@@ -79,5 +81,71 @@ public class ContatoController {
         ContatoEntity contatoSalvo = contatoRepository.save(buscaContato);
 
         return new ResponseEntity<>(contatoService.toContatoDto(contatoSalvo), HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "Realiza a busca do imovel pelo id.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok", response = String.class),
+            @ApiResponse(code = 422, message = "Erro de validação nos campos", response = String.class),
+            @ApiResponse(code = 500, message = "Erro interno do servidor", response = String.class) })
+    @GetMapping(value = "/buscar-todos-contatos")
+    public ResponseEntity<?> buscarTodosContatos() throws Exception {
+
+        List<ContatoEntity> contatoEntityList = contatoRepository.findAll();
+
+        return new ResponseEntity<>(contatoEntityList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Realiza a busca do imovel pelo id.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok", response = String.class),
+            @ApiResponse(code = 422, message = "Erro de validação nos campos", response = String.class),
+            @ApiResponse(code = 500, message = "Erro interno do servidor", response = String.class) })
+    @GetMapping(value = "/buscar-todos-contatos-maior-25anos")
+    public ResponseEntity<?> buscarTodosContatosAcima25Anos() throws Exception {
+
+        List<ContatoEntity> contatoEntityList = contatoService.regraIdadeMaior25();
+
+        return new ResponseEntity<>(contatoEntityList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Realiza a busca do imovel pelo id.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok", response = String.class),
+            @ApiResponse(code = 422, message = "Erro de validação nos campos", response = String.class),
+            @ApiResponse(code = 500, message = "Erro interno do servidor", response = String.class) })
+    @GetMapping(value = "/buscar-todos-contatos-maior/{idade}")
+    public ResponseEntity<?> buscarTodosContatosAcima(@PathVariable("idade") Integer idade) throws Exception {
+
+        List<ContatoEntity> contatoEntityList = contatoRepository.buscarContatoIdadeMaior(idade);
+
+        return new ResponseEntity<>(contatoEntityList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Realiza a busca do imovel pelo id.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok", response = String.class),
+            @ApiResponse(code = 422, message = "Erro de validação nos campos", response = String.class),
+            @ApiResponse(code = 500, message = "Erro interno do servidor", response = String.class) })
+    @GetMapping(value = "/buscar-todos-contatos/{nome}")
+    public ResponseEntity<?> buscarTodosContatosNome(@PathVariable("nome") String nome) throws Exception {
+
+        List<ContatoEntity> contatoEntityList = contatoRepository.findByNome(nome);
+
+        return new ResponseEntity<>(contatoEntityList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Realiza a busca do imovel pelo id.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok", response = String.class),
+            @ApiResponse(code = 422, message = "Erro de validação nos campos", response = String.class),
+            @ApiResponse(code = 500, message = "Erro interno do servidor", response = String.class) })
+    @GetMapping(value = "/buscar-todos-contatos/like/{nome}")
+    public ResponseEntity<?> buscarTodosContatosNomeLike(@PathVariable("nome") String nome) throws Exception {
+
+        List<ContatoEntity> contatoEntityList = contatoRepository.buscarNomeLike(nome);
+
+        return new ResponseEntity<>(contatoEntityList, HttpStatus.OK);
     }
 }

@@ -42,8 +42,8 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
 
         ApiInfo apiInfo = new ApiInfoBuilder()
-            .title("API Nuvemshop")
-            .description("Nuvemshop - API")
+            .title("API Agendamento Clínico")
+            .description("Agendamento Clínico - API")
             .version("1.0.0")
             .termsOfServiceUrl("API")
             .build();
